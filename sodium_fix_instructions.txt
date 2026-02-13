@@ -1,0 +1,30 @@
+To manually address the 'sodium' extension warning, please follow these steps:
+
+1.  **Identify your `php.ini` file:**
+    *   You previously ran `php --ini` and it showed your loaded `php.ini` file at `C:\Users\User\.config\herd-lite\bin\php.ini`.
+    *   This is the file you need to edit.
+
+2.  **Open `php.ini` for editing:**
+    *   Navigate to `C:\Users\User\.config\herd-lite\bin` in your file explorer.
+    *   Open `php.ini` with a text editor (e.g., Notepad, VS Code).
+
+3.  **Check for the `sodium` extension entry:**
+    *   Search for lines starting with `extension=sodium` or `extension=php_sodium.dll`.
+    *   Ensure that the line is **not** commented out (i.e., it doesn't start with a semicolon `;`). If it is, remove the semicolon.
+
+4.  **Verify `extension_dir`:**
+    *   Search for the `extension_dir` directive in `php.ini`. It should look something like `extension_dir = "ext"`.
+    *   The value inside the quotes should be the path to your PHP extensions directory. Based on the warning, it's likely `C:\php\ext`. Ensure this path is correct and exists on your system.
+    *   If `php_sodium.dll` is located elsewhere, update `extension_dir` to point to that directory, or move `php_sodium.dll` to the `C:\php\ext` directory.
+
+5.  **Ensure `php_sodium.dll` exists:**
+    *   Check if the `php_sodium.dll` file actually exists in the directory specified by `extension_dir` (e.g., `C:\php\ext`).
+    *   If `php_sodium.dll` is missing:
+        *   You might need to download the correct `php_sodium.dll` for your PHP version (PHP 8.3.11, NTS, x64) from a reliable source (like PHP for Windows builds from `windows.php.net/downloads/releases/`).
+        *   Place the downloaded `php_sodium.dll` into your PHP `ext` directory (e.g., `C:\php\ext`).
+
+6.  **Restart your web server:**
+    *   After making changes to `php.ini`, you *must* restart any running PHP processes or web servers (like Apache, Nginx, or the `php artisan serve` process) for the changes to take effect.
+    *   In your case, you can stop the `php artisan serve` process (if it's still running in the background, you might need to find its PID and kill it, or simply restart your terminal and start it again after making the `php.ini` changes).
+
+Once you've completed these steps, restart your `php artisan serve` command, and the `sodium` warning should be gone.

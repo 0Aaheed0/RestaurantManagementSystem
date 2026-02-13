@@ -1,0 +1,23 @@
+Okay, since `php_sodium.dll` is missing from `C:\php\ext`, that is definitely the cause of the warning. Here's how to fix it:
+
+1.  **Download `php_sodium.dll`:**
+    *   Open your web browser and go to the official PHP for Windows downloads page. You'll need to find the specific build for your PHP version.
+    *   Based on your `php -v` output, you are running `PHP 8.3.11 (cli) (built: Oct 7 2024 10:44:06) (NTS Visual C++ 2019 x64)`.
+    *   You should look for a "VC16 x64 Non Thread Safe (NTS)" build for PHP 8.3.11.
+    *   Once you find the appropriate PHP 8.3.11 zip file, download it.
+
+2.  **Extract `php_sodium.dll`:**
+    *   Open the downloaded PHP zip file.
+    *   Inside the zip file, navigate to the `ext/` folder.
+    *   Locate `php_sodium.dll` within the `ext/` folder.
+    *   Extract *only* this `php_sodium.dll` file.
+
+3.  **Place `php_sodium.dll` in the correct directory:**
+    *   Place the extracted `php_sodium.dll` file into your PHP extensions directory: `C:\php\ext`.
+
+4.  **Restart `php artisan serve`:**
+    *   Once you've placed the `php_sodium.dll` file in `C:\php\ext`, you'll need to restart your `php artisan serve` process.
+    *   Since I ran it in the background, you might need to stop it by finding its process ID (PID) and killing it, or simply close and reopen your terminal/command prompt.
+    *   After that, I can restart it for you.
+
+Please follow these steps carefully. Once you have placed the `php_sodium.dll` file in `C:\php\ext` and are ready, please let me know.

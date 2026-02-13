@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 // Protected routes (after login)
 Route::middleware(['auth'])->group(function () {
 
