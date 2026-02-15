@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth; // <-- ADDED THIS FOR LOGIN
 
 class UsersController extends Controller
 {
@@ -24,6 +25,34 @@ class UsersController extends Controller
     }
 
     /**
+     * --- NEW: LOGIN METHOD ADDED HERE ---
+     * Handle an authentication attempt.
+     */
+    public function login(Request $request)
+    {
+        // 1. Validate the form inputs
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        // 2. Try to log the user in using the provided credentials
+        if (Auth::attempt($credentials)) {
+            // Success: Regenerate session and redirect to intended dashboard page
+            $request->session()->regenerate();
+            
+            // Note: Change 'dashboard' to whatever your actual homepage route is named!
+            return redirect()->intended('dashboard'); 
+        }
+
+        // 3. Failure: Send them back to the login page with an error. 
+        // This is what triggers the SweetAlert popup in your blade file!
+        return back()->withErrors([
+            'email' => 'The provided email or password is incorrect.',
+        ])->onlyInput('email'); // Keeps their email in the input box
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show($id)
@@ -40,22 +69,30 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. (Sign-Up Logic)
      */
     public function store(Request $request)
     {
+        // --- VALIDATION FOR REGISTRATION ---
+        $validatedData = $request->validate([
+            'name'     => ['required', 'string', 'regex:/^[^0-9]+$/'], 
+            'email'    => ['required', 'email'],                       
+            'password' => ['required', 'min:8', 'confirmed'],          
+        ], [
+            'name.regex' => 'The name field cannot contain numbers.',
+        ]);
+
         $body = $request->json();
 
-        // Log to console/logs instead of response
         logger()->info('POST /items - Request body:', ['body' => $body]);
         logger()->info('POST /items - All request data:', $request->all());
 
         return response()->json([
-            'message' => 'Item created successfully',
+            'message' => 'User validated and processed successfully',
             'data' => [
                 'id' => rand(100, 999),
-                'name' => $body->get('name'),
-                'description' => $request->input('description', 'Item description'),
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
                 'created_at' => now(),
             ]
         ], 201);
@@ -106,4 +143,3 @@ class UsersController extends Controller
         ]);
     }
 }
-

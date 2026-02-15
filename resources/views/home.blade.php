@@ -131,11 +131,12 @@
                 </div>
             </div>
 
-            <div class="mt-20 flex justify-center">
-                <button class="bg-white border border-slate-200 text-slate-400 px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:text-red-500 hover:border-red-100 transition shadow-sm active:scale-95">
+            <form method="POST" action="{{ route('logout') }}" class="mt-20 flex justify-center">
+                @csrf
+                <button type="button" onclick="confirmLogout(event, this.closest('form'))" class="bg-white border border-slate-200 text-slate-400 px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:text-red-500 hover:border-red-100 transition shadow-sm active:scale-95">
                     End Administrative Session
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </x-app-layout>

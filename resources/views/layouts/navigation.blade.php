@@ -27,7 +27,7 @@
             </div>
 
             <div class="hidden lg:flex flex-1 justify-center">
-                </div>
+            </div>
 
             <div class="hidden sm:flex items-center gap-3 shrink-0 mr-4">
                 <x-dropdown align="right" width="48" content-classes="bg-transparent shadow-none p-0">
@@ -59,7 +59,7 @@
                                 @csrf
                                 <x-dropdown-link
                                     :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();"
+                                    onclick="confirmLogout(event, this.closest('form'))" 
                                     class="block rounded-xl px-4 py-2.5 text-sm font-semibold
                                         text-slate-700 hover:bg-red-50 hover:text-red-600 transition"
                                 >
@@ -115,3 +115,27 @@
         </div>
     </div>
 </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmLogout(event, form) {
+        event.preventDefault(); // Stop the form from submitting immediately
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to end your current session?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',     // Red color for the destructive action
+            cancelButtonColor: '#5f0f9c',   // Your purple theme color for "Cancel"
+            confirmButtonText: 'Yes, log out',
+            cancelButtonText: 'No, stay logged in',
+            background: 'rgba(255,255,255,0.95)',
+            backdrop: `rgba(0,0,0,0.4)`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit(); // If they click "Yes", submit the form to log them out
+            }
+        });
+    }
+</script>

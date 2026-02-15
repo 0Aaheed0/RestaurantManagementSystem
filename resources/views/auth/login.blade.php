@@ -5,7 +5,6 @@
     <title>Login | Restaurant Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -111,7 +110,7 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <input type="email" name="email" placeholder="Email" required>
+        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
 
         <div class="password-box">
             <input type="password" name="password" id="password" placeholder="Password" required>
@@ -126,11 +125,26 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
+    // Eye Icon Toggle
     function togglePassword(id) {
         const field = document.getElementById(id);
         field.type = field.type === 'password' ? 'text' : 'password';
     }
+
+    // Trigger SweetAlert popup if Laravel passes back any errors
+    @if($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: '{{ $errors->first() }}', // Grabs the exact error message from the controller
+            background: 'rgba(255,255,255,0.95)',
+            confirmButtonColor: '#5f0f9c',
+            backdrop: `rgba(0,0,0,0.4)`
+        });
+    @endif
 </script>
 
 </body>
