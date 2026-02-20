@@ -32,7 +32,7 @@
                 <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Orders</a>
                 <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Kitchen</a>
                 <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Inventory</a>
-                <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Staff</a>
+                <a href="/apply-staff" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Staff</a>
                 <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Menu Items</a>
                 <a href="#" class="px-6 py-5 text-slate-700 bg-purple-50/50 hover:bg-purple-600 hover:text-white rounded-2xl transition-all font-black text-lg border-2 border-transparent hover:border-purple-400">Reports</a>
             </nav>

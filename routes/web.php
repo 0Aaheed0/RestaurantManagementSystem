@@ -2,7 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffController;
 
+Route::post('/apply-staff', [StaffController::class, 'apply']);
+Route::get('/approve-staff/{id}', [StaffController::class, 'approve']);
+Route::get('/apply-staff', function () {
+    return view('apply-staff');
+});
+Route::get('/reject-staff/{id}', [StaffController::class, 'reject']);
 Route::get('/', function () {
     return view('welcome');
 });
