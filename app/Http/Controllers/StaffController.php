@@ -19,7 +19,7 @@ class StaffController extends Controller
         $request->experience
     ]);
 
-    return back()->with('success', 'Application Submitted!');
+    return response()->json(['success' => 'Application Submitted!']);
 }
 
 public function approve($id)

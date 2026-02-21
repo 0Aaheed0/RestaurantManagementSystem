@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Apply for Staff | Restaurant Management System</title>
+    <title>Submit Report | Restaurant Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -68,9 +68,9 @@
         }
 
         input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.7); }
-
-        textarea { resize: vertical; }
         
+        textarea { resize: vertical; }
+
         button {
             width: 100%;
             padding: 12px;
@@ -93,24 +93,24 @@
 <div class="shape shape3"></div>
 
 <div class="glass-card">
-    <div class="logo"><i class="fa-solid fa-user-plus"></i></div>
-    <h2>Apply for Staff</h2>
+    <div class="logo"><i class="fa-solid fa-file-alt"></i></div>
+    <h2>Submit a Report</h2>
 
-    <form id="staff-application-form" action="/apply-staff" method="POST">
+    <form id="report-form" method="POST" action="{{ route('report.store') }}">
         @csrf
-        <input type="text" name="full_name" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email Address" required>
-        <input type="text" name="phone" placeholder="Phone Number">
-        <input type="text" name="position" placeholder="Position Applied For" required>
-        <textarea name="experience" placeholder="Relevant Experience" rows="4"></textarea>
+        <input type="text" name="title" placeholder="Title" required autofocus>
+        <textarea name="description" placeholder="Description" rows="4" required></textarea>
+        <input type="text" name="customer_name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Email (Optional)">
+        <input type="text" name="phone" placeholder="Phone (Optional)">
 
-        <button type="submit">SUBMIT APPLICATION</button>
+        <button type="submit">SUBMIT REPORT</button>
     </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.getElementById('staff-application-form').addEventListener('submit', function(e) {
+    document.getElementById('report-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
         const form = e.target;
@@ -120,7 +120,7 @@
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': form.querySelector('input[name=_token]').value,
                 'Accept': 'application/json',
             }
         })
