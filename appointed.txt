@@ -1,0 +1,4 @@
+INSERT INTO staff (full_name, email, phone, position)
+SELECT full_name, email, phone, position
+FROM staff_applications
+WHERE id = 1;
