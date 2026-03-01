@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\FaqController;
 
 Route::post('/apply-staff', [StaffController::class, 'apply']);
 Route::get('/approve-staff/{id}', [StaffController::class, 'approve']);
@@ -13,6 +14,7 @@ Route::get('/apply-staff', function () {
 Route::get('/reject-staff/{id}', [StaffController::class, 'reject']);
 
 Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 
 Route::get('/', function () {
     return view('welcome');
