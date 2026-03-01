@@ -3,13 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\BranchController;
 
 Route::post('/apply-staff', [StaffController::class, 'apply']);
 Route::get('/approve-staff/{id}', [StaffController::class, 'approve']);
 Route::get('/apply-staff', function () {
     return view('apply-staff');
-});
+})->name('staff.apply');
 Route::get('/reject-staff/{id}', [StaffController::class, 'reject']);
+
+Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
+
 Route::get('/', function () {
     return view('welcome');
 })->middleware('guest');
@@ -19,12 +23,12 @@ Route::get('/', function () {
 // Protected routes (after login)
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\HomeController;
+
 Route::middleware(['auth', 'no-cache'])->group(function () {
 
-    Route::view('/home', 'home')->name('home');
-    Route::get('/dashboard', function () {
-        return view('home');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

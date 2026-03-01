@@ -9,17 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::create('branches', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');
-        $table->string('location');
-        $table->string('phone')->nullable();
-        $table->string('email')->nullable();
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('branches', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('city');
+            $table->string('area');
+            $table->text('address');
+            $table->string('phone');
+            $table->time('opening_time');
+            $table->time('closing_time');
+            $table->string('map_link')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
