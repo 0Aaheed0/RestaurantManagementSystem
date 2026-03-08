@@ -16,7 +16,7 @@
                 </button>
             </div>
 
-            <div class="flex items-center justify-center gap-4 shrink-0">
+            <div class="flex items-center justify-center shrink-0">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-4 group no-underline">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-12 w-auto transition-transform group-hover:scale-105" />
                     <span class="hidden md:block font-extrabold tracking-[0.25em] text-slate-800 uppercase text-lg">

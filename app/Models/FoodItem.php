@@ -11,6 +11,7 @@ class FoodItem extends Model
 
     protected $fillable = [
         'name',
+        'category',
         'description',
         'price',
         'image',

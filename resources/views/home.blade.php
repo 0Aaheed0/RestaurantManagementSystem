@@ -24,39 +24,7 @@
     <div class="shape shape2"></div>
     <div class="shape shape3"></div>
 
-    <div x-data="{ sidebarOpen: false }" @open-menu.window="sidebarOpen = true" class="min-h-screen relative overflow-x-hidden">
-        
-        <div x-show="sidebarOpen" style="display:none" @click="sidebarOpen=false"
-             x-transition.opacity
-             class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40"></div>
-
-        <div x-show="sidebarOpen" style="display:none"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="-translate-x-full"
-             x-transition:enter-end="translate-x-0"
-             x-transition:leave="transition ease-in duration-300"
-             x-transition:leave-start="translate-x-0"
-             x-transition:leave-end="-translate-x-full"
-             class="fixed inset-y-0 left-0 w-80 bg-white border-r border-slate-200 z-50 p-6 shadow-2xl flex flex-col h-full">
-
-            <div class="flex items-center justify-between mb-8 border-b border-slate-50 pb-4">
-                <span class="text-purple-600 font-black tracking-widest text-sm uppercase">Main Menu</span>
-                <button @click="sidebarOpen=false" class="text-slate-400 hover:text-purple-600">✕</button>
-            </div>
-
-            <nav class="flex flex-col gap-3 overflow-y-auto pr-2 flex-1">
-                <a href="{{ route('dashboard') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Home</a>
-                <a href="/food" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Food</a>
-                <a href="/orders" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Orders</a>
-                <a href="{{ route('branches.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Branch</a>
-                <a href="{{ route('staff.apply') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Staff Application</a>
-                <a href="{{ route('report.create') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reports</a>
-                <a href="/reviews" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reviews</a>
-                <a href="/faq" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">FAQ</a>
-            </nav>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6 pt-12 pb-16 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 pt-12 pb-16 relative z-10">
 
             <div class="flex justify-end items-center mb-10">
                 <div class="text-slate-500 font-bold text-sm bg-white px-6 py-3 rounded-full border shadow-sm">

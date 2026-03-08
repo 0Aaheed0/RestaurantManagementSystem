@@ -94,6 +94,27 @@
         .amenity-icon:hover {
             color: #7c3aed;
         }
+        /* Sidebar Protection from Bootstrap */
+        .fixed.inset-y-0.left-0.w-80 {
+            width: 20rem !important;
+            padding: 1.5rem !important;
+            box-sizing: border-box !important;
+            max-width: 320px !important;
+        }
+        .fixed.inset-y-0.left-0.w-80 * {
+            box-sizing: border-box !important;
+        }
+        .fixed.inset-y-0.left-0.w-80 nav a {
+            display: block !important;
+            text-decoration: none !important;
+            color: inherit !important;
+            padding: 1.25rem 1.5rem !important;
+            font-size: 1.125rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        .fixed.inset-y-0.left-0.w-80 nav a:hover {
+            color: white !important;
+        }
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
