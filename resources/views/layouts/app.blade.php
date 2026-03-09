@@ -39,7 +39,8 @@
                 <nav class="flex flex-col gap-3 overflow-y-auto pr-2 flex-1">
                     <a href="{{ route('dashboard') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Home</a>
                     <a href="{{ route('food.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Food</a>
-                    <a href="/orders" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Orders</a>
+                    <a href="{{ route('cart.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Cart</a>
+                    <a href="{{ route('orders.history') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Order History</a>
                     <a href="{{ route('branches.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Branch</a>
                     <a href="{{ route('staff.apply') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Staff Application</a>
                     <a href="{{ route('report.create') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reports</a>

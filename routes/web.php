@@ -8,6 +8,9 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ReviewController;
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+
 Route::post('/apply-staff', [StaffController::class, 'apply']);
 Route::get('/approve-staff/{id}', [StaffController::class, 'approve']);
 Route::get('/apply-staff', function () {
@@ -44,6 +47,15 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
 
     Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
     Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+    // Cart routes
+    Route::get('/cart', [CartController::class,'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class,'add'])->name('cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class,'remove'])->name('cart.remove');
+
+    // Orders routes
+    Route::post('/checkout', [OrderController::class,'checkout'])->name('checkout');
+    Route::get('/orders/history', [OrderController::class,'history'])->name('orders.history');
 });
 
 require __DIR__.'/auth.php';
