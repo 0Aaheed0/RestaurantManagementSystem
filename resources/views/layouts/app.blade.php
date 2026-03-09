@@ -43,7 +43,7 @@
                     <a href="{{ route('branches.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Branch</a>
                     <a href="{{ route('staff.apply') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Staff Application</a>
                     <a href="{{ route('report.create') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reports</a>
-                    <a href="/reviews" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reviews</a>
+                    <a href="{{ route('review.index') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">Reviews</a>
                     <a href="{{ route('faq') }}" class="px-6 py-5 bg-purple-50 hover:bg-purple-600 hover:text-white rounded-2xl font-black text-lg transition-all duration-300 no-underline">FAQ</a>
                 </nav>
             </div>

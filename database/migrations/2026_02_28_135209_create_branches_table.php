@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('area');
-            $table->text('address');
+            $table->string('address');
             $table->string('phone');
             $table->time('opening_time');
             $table->time('closing_time');

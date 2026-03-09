@@ -17,4 +17,9 @@ class FoodItem extends Model
         'image',
         'is_available',
     ];
+
+    public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
 }

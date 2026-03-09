@@ -6,6 +6,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\ReviewController;
 
 Route::post('/apply-staff', [StaffController::class, 'apply']);
 Route::get('/approve-staff/{id}', [StaffController::class, 'approve']);
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
 
     Route::get('/report', [ReportController::class, 'create'])->name('report.create');
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
+
+    Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
+    Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 });
 
 require __DIR__.'/auth.php';
