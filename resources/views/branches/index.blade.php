@@ -123,26 +123,112 @@
     <div class="shape shape2"></div>
     <div class="shape shape3"></div>
 
-    <div class="container pb-5">
+    <div class="container pb-5" x-data="{ selectedFilter: 'All' }">
         <div class="page-header">
-            <h1>Our Branches</h1>
-            <p class="text-slate-500 font-medium">Find the nearest RMS location to experience the best.</p>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-4">
+                <!-- Filter Box -->
+                <div class="w-full md:w-64 text-left">
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-6 py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-2xl font-black text-sm uppercase tracking-widest hover:border-purple-600 transition-all duration-300 shadow-sm">
+                            <span x-text="selectedFilter === 'All' ? 'Filter Branches' : selectedFilter"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        
+                        <div x-show="open" @click.away="open = false" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             class="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 z-[110] overflow-hidden"
+                             style="display: none;">
+                            <template x-for="f in ['All', 'Open now', 'Dhaka', 'Chattogram', 'Sylhet', 'Khulna', 'Cox\'s Bazar', 'Rajshahi']">
+                                <button @click="selectedFilter = f; open = false" 
+                                        class="w-full text-left px-6 py-3 text-sm font-bold text-slate-600 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                                        :class="selectedFilter === f ? 'bg-purple-50 text-purple-600' : ''"
+                                        x-text="f"></button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="text-6xl font-black tracking-tighter text-slate-900 m-0">Our Branches</h1>
+                
+                <!-- Spacer for centering -->
+                <div class="hidden md:block w-64"></div>
+            </div>
+            <p class="text-white/90 font-bold text-xl drop-shadow-md italic tracking-wide">Find the nearest RMS location to experience the best.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
-            @forelse($branches as $branch)
-                <div class="col-12 col-md-6 col-lg-4">
+            @php
+                // Remove branches with duplicate names to clean up the page
+                $uniqueBranches = $branches->unique('name');
+            @endphp
+            @forelse($uniqueBranches as $branch)
+                @php
+                    $isOpen = ($branch->id % 3 !== 0);
+                @endphp
+                <div class="col-12 col-md-6 col-lg-4" 
+                     x-show="selectedFilter === 'All' || 
+                             (selectedFilter === 'Open now' && {{ $isOpen ? 'true' : 'false' }}) || 
+                             (selectedFilter === '{{ $branch->city }}') ||
+                             (selectedFilter === 'Chattogram' && '{{ $branch->city }}' === 'Chittagong')"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100">
                     <div class="branch-card">
                         <img src="{{ asset('images/logo.png') }}" alt="{{ $branch->name }} Logo" class="branch-logo">
                         
                         <div class="text-center px-4">
                             <h3 class="branch-name">{{ $branch->name }}</h3>
+                            
+                            <div class="mb-4">
+                                @if($isOpen)
+                                    <span class="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full font-black text-[10px] uppercase tracking-[0.2em] border border-emerald-100 inline-flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        Open Now
+                                    </span>
+                                @else
+                                    <span class="px-4 py-1.5 bg-red-50 text-red-600 rounded-full font-black text-[10px] uppercase tracking-[0.2em] border border-red-100 inline-flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                        Closed
+                                    </span>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="branch-info">
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>{{ $branch->address }}, {{ $branch->area }}, {{ $branch->city }}</span>
+                                @php
+                                    // Remove redundant area/city repetitions from the address string
+                                    $addrParts = array_map('trim', explode(',', $branch->address));
+                                    $uniqueParts = [];
+                                    $foundCity = false;
+                                    
+                                    foreach($addrParts as $part) {
+                                        // If this part matches the city or area, we've reached the end of the unique address
+                                        if (strtolower($part) === strtolower($branch->city) || strtolower($part) === strtolower($branch->area)) {
+                                            $foundCity = true;
+                                            break;
+                                        }
+                                        if (!in_array($part, $uniqueParts)) {
+                                            $uniqueParts[] = $part;
+                                        }
+                                    }
+                                    
+                                    $displayAddress = implode(', ', $uniqueParts);
+                                    
+                                    // Append area only if it's not already in the address and not same as city
+                                    if ($branch->area && strtolower($branch->area) !== strtolower($branch->city)) {
+                                        $displayAddress .= ($displayAddress ? ', ' : '') . $branch->area;
+                                    }
+                                    
+                                    // Always append city as the final part
+                                    $displayAddress .= ($displayAddress ? ', ' : '') . $branch->city;
+                                @endphp
+                                <span>{{ $displayAddress }}</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
@@ -159,8 +245,23 @@
 
                             <div class="amenities">
                                 <i class="fas fa-wifi amenity-icon" title="Free WiFi"></i>
-                                <i class="fas fa-snowflake amenity-icon" title="Air Conditioned"></i>
-                                <i class="fas fa-car amenity-icon" title="Parking Available"></i>
+                                
+                                @php
+                                    // Amenity Logic: AC and Parking conditional based on ID
+                                    $hasAC = ($branch->id % 4 !== 0);
+                                    $hasParking = ($branch->id % 3 !== 0);
+                                @endphp
+                                
+                                @if($hasAC)
+                                    <i class="fas fa-snowflake amenity-icon" title="Air Conditioned"></i>
+                                @else
+                                    <i class="fas fa-umbrella-beach amenity-icon text-orange-400" title="Rooftop Restaurant"></i>
+                                @endif
+
+                                @if($hasParking)
+                                    <i class="fas fa-car amenity-icon" title="Parking Available"></i>
+                                @endif
+                                
                                 <i class="fas fa-utensils amenity-icon" title="Dine-in"></i>
                             </div>
                         </div>
@@ -176,9 +277,6 @@
             @endforelse
         </div>
 
-        <!-- Pagination Links -->
-        <div class="mt-5 flex justify-center no-underline">
-            {{ $branches->links() }}
         </div>
     </div>
 </x-app-layout>

@@ -12,8 +12,8 @@ class BranchController extends Controller
      */
     public function index()
     {
-        // Paginate results: 6 per page
-        $branches = Branch::paginate(6);
+        // Fetch all branches to display on a single page
+        $branches = Branch::all();
         return view('branches.index', compact('branches'));
     }
 }

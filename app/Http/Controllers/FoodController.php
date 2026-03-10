@@ -13,8 +13,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        // Fetch all available food items
-        $items = FoodItem::where('is_available', true)->get();
+        // Fetch all food items (including unavailable ones)
+        $items = FoodItem::all();
 
         // Group them by their 'category' column, with a smart fallback based on name
         $categories = $items->groupBy(function($item) {

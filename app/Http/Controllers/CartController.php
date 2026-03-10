@@ -15,10 +15,20 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-        $cart = CartItem::updateOrCreate(
-            ['user_id'=>auth()->id(),'food_item_id'=>$request->food_item_id],
-            ['quantity'=>$request->quantity]
-        );
+        $cartItem = CartItem::where('user_id', auth()->id())
+            ->where('food_item_id', $request->food_item_id)
+            ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += $request->quantity;
+            $cartItem->save();
+        } else {
+            CartItem::create([
+                'user_id' => auth()->id(),
+                'food_item_id' => $request->food_item_id,
+                'quantity' => $request->quantity
+            ]);
+        }
 
         return back()->with('success','Added to cart!');
     }
