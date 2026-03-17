@@ -165,8 +165,7 @@
                     </tbody>
                 </table>
 
-                <form method="POST" action="{{ route('checkout') }}">
-                    @csrf
+                <form method="GET" action="{{ route('checkout') }}">
                     <button type="submit" class="checkout-btn">Proceed to Checkout</button>
                 </form>
             @else

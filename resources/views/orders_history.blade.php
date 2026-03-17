@@ -118,6 +118,95 @@
             color: white;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
+
+        .order-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .order-detail-label {
+            font-weight: 600;
+        }
+
+        .address-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .address-badge:hover {
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(31, 41, 55, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 500px;
+            width: 90%;
+            color: white;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .modal-address-info {
+            line-height: 1.8;
+        }
+
+        .modal-address-info div {
+            margin-bottom: 10px;
+        }
+
+        .modal-address-label {
+            font-weight: 600;
+            opacity: 0.8;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
     </style>
 
     <div class="order-history-container">
@@ -142,7 +231,8 @@
                             <th>Order ID</th>
                             <th>Date</th>
                             <th>Items</th>
-                            <th>Total Amount</th>
+                            <th>Amount</th>
+                            <th>Delivery</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -158,7 +248,40 @@
                                         @endforeach
                                     </ul>
                                 </td>
-                                <td><span style="font-weight: 700;">৳{{ number_format($order->total_price, 0) }}</span></td>
+                                <td>
+                                    <div style="font-weight: 700;">৳{{ number_format($order->total_price, 0) }}</div>
+                                    @if($order->discount_amount > 0)
+                                        <div style="font-size: 12px; opacity: 0.8; margin-top: 2px;">
+                                            <span style="color: #4ade80;">-৳{{ number_format($order->discount_amount, 0) }}</span>
+                                            @if($order->voucher)
+                                                <br>{{ $order->voucher->code }}
+                                            @endif
+                                        </div>
+                                        <div style="font-size: 12px; font-weight: 600; margin-top: 4px;">Final: ৳{{ number_format($order->final_price, 0) }}</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <button class="address-badge" onclick="openAddressModal({{ $order->id }})">
+                                        <i class="fa-solid fa-map-marker-alt"></i> View Address
+                                    </button>
+                                    <!-- Hidden address data -->
+                                    <div id="address-{{ $order->id }}" style="display:none;">
+                                        <div class="modal-address-info">
+                                            <div>
+                                                <div class="modal-address-label">📍 Street Address</div>
+                                                <div>{{ $order->delivery_address }}</div>
+                                            </div>
+                                            <div>
+                                                <div class="modal-address-label">🏙️ City</div>
+                                                <div>{{ $order->delivery_city }}, {{ $order->delivery_postal_code }}</div>
+                                            </div>
+                                            <div>
+                                                <div class="modal-address-label">📞 Phone Number</div>
+                                                <div>{{ $order->delivery_phone }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="status-badge {{ $order->status == 'pending' ? 'status-pending' : 'status-completed' }}">
                                         {{ $order->status }}
@@ -177,4 +300,35 @@
             <a href="{{ route('food.index') }}" class="back-btn">Order New Food</a>
         </div>
     </div>
+
+    <!-- Address Modal -->
+    <div id="addressModal" class="modal" onclick="if(event.target === this) closeAddressModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>📍 Delivery Address</span>
+                <button class="modal-close" onclick="closeAddressModal()">&times;</button>
+            </div>
+            <div id="modalAddressContent"></div>
+        </div>
+    </div>
+
+    <script>
+        function openAddressModal(orderId) {
+            const addressData = document.getElementById('address-' + orderId);
+            const content = document.getElementById('modalAddressContent');
+            content.innerHTML = addressData.innerHTML;
+            document.getElementById('addressModal').classList.add('active');
+        }
+
+        function closeAddressModal() {
+            document.getElementById('addressModal').classList.remove('active');
+        }
+
+        // Close modal when pressing Escape
+        document.addEventListener('keydown', function(event) {
+            if(event.key === 'Escape') {
+                closeAddressModal();
+            }
+        });
+    </script>
 </x-app-layout>

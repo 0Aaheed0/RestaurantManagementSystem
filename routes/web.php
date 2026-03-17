@@ -53,8 +53,11 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
     Route::post('/cart/add', [CartController::class,'add'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class,'remove'])->name('cart.remove');
 
-    // Orders routes
-    Route::post('/checkout', [OrderController::class,'checkout'])->name('checkout');
+    // Orders & Checkout routes
+    Route::get('/checkout', [OrderController::class,'showCheckout'])->name('checkout');
+    Route::post('/checkout/apply-voucher', [OrderController::class,'applyVoucher'])->name('checkout.apply-voucher');
+    Route::post('/checkout/remove-voucher', [OrderController::class,'removeVoucher'])->name('checkout.remove-voucher');
+    Route::post('/checkout/process', [OrderController::class,'processPayment'])->name('checkout.process');
     Route::get('/orders/history', [OrderController::class,'history'])->name('orders.history');
 });
 
