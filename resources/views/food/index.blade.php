@@ -130,14 +130,19 @@
                                                      x-transition:enter-end="opacity-100 scale-100"
                                                      class="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 z-[110] overflow-hidden"
                                                      style="display: none;">
-                                                    <template x-for="cat in ['All', 'Available', 'Pizza', 'Burger', 'Kacchi/Rice', 'Special', 'Beverage']">
-                                                        <button @click="selectedCategory = cat; open = false" 
+                                                    <button @click="selectedCategory = 'All'; open = false" 
+                                                            class="w-full text-left px-6 py-3 text-sm font-bold text-slate-600 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                                                            :class="selectedCategory === 'All' ? 'bg-purple-50 text-purple-600' : ''">All</button>
+                                                    <button @click="selectedCategory = 'Available'; open = false" 
+                                                            class="w-full text-left px-6 py-3 text-sm font-bold text-slate-600 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                                                            :class="selectedCategory === 'Available' ? 'bg-purple-50 text-purple-600' : ''">Available</button>
+                                                    @foreach($categories as $categoryName => $items)
+                                                        <button @click="selectedCategory = '{{ $categoryName ?: 'General' }}'; open = false" 
                                                                 class="w-full text-left px-6 py-3 text-sm font-bold text-slate-600 hover:bg-purple-50 hover:text-purple-600 transition-colors"
-                                                                :class="selectedCategory === cat ? 'bg-purple-50 text-purple-600' : ''"
-                                                                x-text="cat"></button>
-                                                    </template>
-                                                </div>
-                                            </div>
+                                                                :class="selectedCategory === '{{ $categoryName ?: 'General' }}' ? 'bg-purple-50 text-purple-600' : ''"
+                                                                x-text="'{{ $categoryName ?: 'General' }}'"></button>
+                                                    @endforeach
+                                                </div>                                            </div>
                                         </div>
                                         
                                         <h1 class="text-5xl font-black text-slate-800 tracking-tight text-center">Our Menu</h1>
@@ -187,7 +192,7 @@
                                 }
                             @endphp
                             <img 
-                                src="{{ $img }}" 
+                                src="{{ asset($img) }}" 
                                 alt="{{ $item->name }}" 
                                 class="w-full h-full transition-transform duration-500 hover:scale-110"
                                 style="object-fit: cover;"

@@ -63,10 +63,28 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
     // Admin Dashboard routes
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/foods', [\App\Http\Controllers\AdminController::class, 'foods'])->name('admin.foods');
+    Route::post('/admin/foods/add', [\App\Http\Controllers\AdminController::class, 'addFood'])->name('admin.foods.add');
+    Route::post('/admin/foods/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateFood'])->name('admin.foods.update');
+    Route::post('/admin/foods/delete/{id}', [\App\Http\Controllers\AdminController::class, 'deleteFood'])->name('admin.foods.delete');
+    Route::get('/admin/orders', [\App\Http\Controllers\AdminController::class, 'orders'])->name('admin.orders');
+    Route::post('/admin/orders/update-status/{id}', [\App\Http\Controllers\AdminController::class, 'updateOrderStatus'])->name('admin.orders.update-status');
     Route::get('/admin/vouchers', [\App\Http\Controllers\AdminController::class, 'vouchers'])->name('admin.vouchers');
+    Route::post('/admin/vouchers/add', [\App\Http\Controllers\AdminController::class, 'addVoucher'])->name('admin.vouchers.add');
+    Route::post('/admin/vouchers/delete/{id}', [\App\Http\Controllers\AdminController::class, 'deleteVoucher'])->name('admin.vouchers.delete');
     Route::get('/admin/reviews', [\App\Http\Controllers\AdminController::class, 'reviews'])->name('admin.reviews');
+    Route::post('/admin/reviews/delete/{id}', [\App\Http\Controllers\AdminController::class, 'deleteReview'])->name('admin.reviews.delete');
     Route::get('/admin/reports', [\App\Http\Controllers\AdminController::class, 'reports'])->name('admin.reports');
+    Route::post('/admin/reports/solve/{id}', [\App\Http\Controllers\AdminController::class, 'solveReport'])->name('admin.reports.solve');
+    Route::get('/admin/faqs', [\App\Http\Controllers\AdminController::class, 'faqs'])->name('admin.faqs');
+    Route::post('/admin/faqs/add', [\App\Http\Controllers\AdminController::class, 'addFaq'])->name('admin.faqs.add');
+    Route::post('/admin/faqs/delete/{id}', [\App\Http\Controllers\AdminController::class, 'deleteFaq'])->name('admin.faqs.delete');
+    Route::get('/admin/branches', [\App\Http\Controllers\AdminController::class, 'branches'])->name('admin.branches');
+    Route::post('/admin/branches/add', [\App\Http\Controllers\AdminController::class, 'addBranch'])->name('admin.branches.add');
+    Route::post('/admin/branches/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBranch'])->name('admin.branches.update');
+    Route::post('/admin/branches/delete/{id}', [\App\Http\Controllers\AdminController::class, 'deleteBranch'])->name('admin.branches.delete');
     Route::get('/admin/staffs', [\App\Http\Controllers\AdminController::class, 'staffs'])->name('admin.staffs');
+    Route::post('/admin/staffs/approve/{id}', [\App\Http\Controllers\AdminController::class, 'approveStaff'])->name('admin.staffs.approve');
+    Route::post('/admin/staffs/decline/{id}', [\App\Http\Controllers\AdminController::class, 'declineStaff'])->name('admin.staffs.decline');
 });
 
 require __DIR__.'/auth.php';

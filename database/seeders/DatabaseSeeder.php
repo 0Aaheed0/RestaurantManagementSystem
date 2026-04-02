@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             VoucherSeeder::class,
             ReviewSeeder::class,
+            StaffSeeder::class,
         ]);
     }
 }

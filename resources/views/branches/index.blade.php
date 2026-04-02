@@ -167,7 +167,7 @@
             @endphp
             @forelse($uniqueBranches as $branch)
                 @php
-                    $isOpen = ($branch->id % 3 !== 0);
+                    $isOpen = $branch->is_open;
                 @endphp
                 <div class="col-12 col-md-6 col-lg-4" 
                      x-show="selectedFilter === 'All' || 
@@ -236,7 +236,7 @@
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-envelope"></i>
-                                <span>{{ strtolower(str_replace(' ', '.', $branch->area)) }}@rms-system.com</span>
+                                <span>{{ $branch->email ?? strtolower(str_replace(' ', '.', $branch->area)) . '@rms-system.com' }}</span>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-clock"></i>
@@ -244,21 +244,17 @@
                             </div>
 
                             <div class="amenities">
-                                <i class="fas fa-wifi amenity-icon" title="Free WiFi"></i>
+                                @if($branch->has_wifi)
+                                    <i class="fas fa-wifi amenity-icon" title="Free WiFi"></i>
+                                @endif
                                 
-                                @php
-                                    // Amenity Logic: AC and Parking conditional based on ID
-                                    $hasAC = ($branch->id % 4 !== 0);
-                                    $hasParking = ($branch->id % 3 !== 0);
-                                @endphp
-                                
-                                @if($hasAC)
+                                @if($branch->has_ac)
                                     <i class="fas fa-snowflake amenity-icon" title="Air Conditioned"></i>
                                 @else
                                     <i class="fas fa-umbrella-beach amenity-icon text-orange-400" title="Rooftop Restaurant"></i>
                                 @endif
 
-                                @if($hasParking)
+                                @if($branch->has_parking)
                                     <i class="fas fa-car amenity-icon" title="Parking Available"></i>
                                 @endif
                                 

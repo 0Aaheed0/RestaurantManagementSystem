@@ -92,7 +92,14 @@
             <a href="{{ route('admin.vouchers') }}" class="nav-card">
                 <span class="text-7xl mb-6">🎟️</span>
                 <h3 class="text-2xl font-black text-white mb-2">Vouchers</h3>
-                <p class="text-white/75 font-medium text-sm leading-relaxed">Create and track promotional codes and discounts</p>
+                <p class="text-white/75 font-medium text-sm leading-relaxed">Create and manage discount codes and promotions</p>
+            </a>
+
+            <!-- Orders -->
+            <a href="{{ route('admin.orders') }}" class="nav-card">
+                <span class="text-7xl mb-6">📦</span>
+                <h3 class="text-2xl font-black text-white mb-2">Orders</h3>
+                <p class="text-white/75 font-medium text-sm leading-relaxed">View and manage customer orders and delivery status</p>
             </a>
 
             <!-- Reviews -->
@@ -114,6 +121,20 @@
                 <span class="text-7xl mb-6">👥</span>
                 <h3 class="text-2xl font-black text-white mb-2">Staffs</h3>
                 <p class="text-white/75 font-medium text-sm leading-relaxed">Manage employee records, roles, and branch assignments</p>
+            </a>
+
+            <!-- FAQs -->
+            <a href="{{ route('admin.faqs') }}" class="nav-card">
+                <span class="text-7xl mb-6">❓</span>
+                <h3 class="text-2xl font-black text-white mb-2">FAQs</h3>
+                <p class="text-white/75 font-medium text-sm leading-relaxed">Manage frequently asked questions and help content</p>
+            </a>
+
+            <!-- Branches -->
+            <a href="{{ route('admin.branches') }}" class="nav-card">
+                <span class="text-7xl mb-6">📍</span>
+                <h3 class="text-2xl font-black text-white mb-2">Branches</h3>
+                <p class="text-white/75 font-medium text-sm leading-relaxed">Manage restaurant locations, contact info, and map links</p>
             </a>
         </div>
     </main>
