@@ -28,6 +28,29 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    {
+        $adminEmails = [
+            'yousha.cse.20230104097@aust.edu',
+            'aaheed.cse.20230104092@aust.edu',
+            'miraz.cse.20230104092@aust.edu',
+            'noman.cse.20230104088@aust.edu',
+        ];
+
+        if (in_array($user->email, $adminEmails)) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return void

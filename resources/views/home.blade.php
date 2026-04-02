@@ -127,46 +127,129 @@
                 </div>
             </div>
 
-            <div class="mt-24 pb-12 border-t border-white/10 pt-16">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-black text-white mb-2 drop-shadow-md">Get In Touch</h2>
-                    <p class="text-white/70 font-bold tracking-[0.2em] uppercase text-xs">AUST CSE DEPARTMENT</p>
+            <div class="mt-32 pb-20 border-t border-white/10 pt-20">
+                <style>
+                    @keyframes fadeInUp {
+                        from { opacity: 0; transform: translateY(40px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .animate-reveal {
+                        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                        opacity: 0;
+                    }
+                </style>
+
+                <div class="text-center mb-20 animate-reveal">
+                    <h2 class="text-6xl font-black text-white mb-6 drop-shadow-2xl tracking-tight">Get In Touch</h2>
+                    <div class="flex items-center justify-center gap-6 opacity-60">
+                        <span class="h-px w-16 bg-gradient-to-r from-transparent to-white"></span>
+                        <p class="text-white font-bold tracking-[0.5em] uppercase text-xs">AUST CSE DEPARTMENT</p>
+                        <span class="h-px w-16 bg-gradient-to-l from-transparent to-white"></span>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white/10 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300 group">
-                        <div class="w-12 h-12 bg-purple-600 rounded-2xl flex items-center justify-center text-white font-black mb-4 shadow-lg group-hover:scale-110 transition-transform">Y</div>
-                        <h4 class="font-black text-white text-lg mb-1">Yousha</h4>
-                        <a href="mailto:yousha.cse.20230104097@aust.edu" class="block text-[10px] font-bold text-purple-200 hover:text-white transition mb-1">yousha.cse.20230104097@aust.edu</a>
-                        <p class="text-white font-medium text-sm">01621922735</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Card 1: Yousha -->
+                    <div class="group relative bg-white/5 backdrop-blur-2xl p-8 rounded-[3.5rem] border border-white/10 shadow-2xl hover:bg-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-3 animate-reveal" style="animation-delay: 0.1s">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[3.5rem]"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl font-black mb-8 shadow-[0_15px_30px_rgba(147,51,234,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">Y</div>
+                            <h4 class="font-black text-white text-2xl mb-6 tracking-tight">Yousha</h4>
+                            <div class="space-y-4">
+                                <a href="mailto:yousha.cse.20230104097@aust.edu" class="flex items-center text-[11px] font-bold text-purple-200 hover:text-white transition-all duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-600/20 flex items-center justify-center mr-4 group-hover:bg-purple-600/40 transition-colors">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                    </div>
+                                    <span class="truncate">yousha.cse.20230104097@aust.edu</span>
+                                </a>
+                                <div class="flex items-center text-sm font-bold text-white/90">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-600/20 flex items-center justify-center mr-4 group-hover:bg-purple-600/40 transition-colors">
+                                        <i class="fas fa-phone text-xs"></i>
+                                    </div>
+                                    01621922735
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="bg-white/10 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300 group">
-                        <div class="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-black mb-4 shadow-lg group-hover:scale-110 transition-transform">A</div>
-                        <h4 class="font-black text-white text-lg mb-1">Aaheed</h4>
-                        <a href="mailto:aaheed.cse.20230104092@aust.edu" class="block text-[10px] font-bold text-orange-200 hover:text-white transition mb-1">aaheed.cse.20230104092@aust.edu</a>
-                        <p class="text-white font-medium text-sm">01762533535</p>
+                    <!-- Card 2: Aaheed -->
+                    <div class="group relative bg-white/5 backdrop-blur-2xl p-8 rounded-[3.5rem] border border-white/10 shadow-2xl hover:bg-white/10 hover:border-orange-500/50 transition-all duration-500 hover:-translate-y-3 animate-reveal" style="animation-delay: 0.2s">
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[3.5rem]"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-2xl font-black mb-8 shadow-[0_15px_30px_rgba(249,115,22,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">A</div>
+                            <h4 class="font-black text-white text-2xl mb-6 tracking-tight">Aaheed</h4>
+                            <div class="space-y-4">
+                                <a href="mailto:aaheed.cse.20230104092@aust.edu" class="flex items-center text-[11px] font-bold text-orange-200 hover:text-white transition-all duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center mr-4 group-hover:bg-orange-500/40 transition-colors">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                    </div>
+                                    <span class="truncate">aaheed.cse.20230104092@aust.edu</span>
+                                </a>
+                                <div class="flex items-center text-sm font-bold text-white/90">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center mr-4 group-hover:bg-orange-500/40 transition-colors">
+                                        <i class="fas fa-phone text-xs"></i>
+                                    </div>
+                                    01762533535
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="bg-white/10 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300 group">
-                        <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-black mb-4 shadow-lg group-hover:scale-110 transition-transform">N</div>
-                        <h4 class="font-black text-white text-lg mb-1">Noman</h4>
-                        <a href="mailto:noman.cse.20230104097@aust.edu" class="block text-[10px] font-bold text-indigo-200 hover:text-white transition mb-1">noman.cse.20230104097@aust.edu</a>
-                        <p class="text-white font-medium text-sm">01748606355</p>
+                    <!-- Card 3: Noman -->
+                    <div class="group relative bg-white/5 backdrop-blur-2xl p-8 rounded-[3.5rem] border border-white/10 shadow-2xl hover:bg-white/10 hover:border-indigo-500/50 transition-all duration-500 hover:-translate-y-3 animate-reveal" style="animation-delay: 0.3s">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[3.5rem]"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-black mb-8 shadow-[0_15px_30px_rgba(79,70,229,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">N</div>
+                            <h4 class="font-black text-white text-2xl mb-6 tracking-tight">Noman</h4>
+                            <div class="space-y-4">
+                                <a href="mailto:noman.cse.20230104097@aust.edu" class="flex items-center text-[11px] font-bold text-indigo-200 hover:text-white transition-all duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-600/20 flex items-center justify-center mr-4 group-hover:bg-indigo-600/40 transition-colors">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                    </div>
+                                    <span class="truncate">noman.cse.20230104097@aust.edu</span>
+                                </a>
+                                <div class="flex items-center text-sm font-bold text-white/90">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-600/20 flex items-center justify-center mr-4 group-hover:bg-indigo-600/40 transition-colors">
+                                        <i class="fas fa-phone text-xs"></i>
+                                    </div>
+                                    01748606355
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="bg-white/10 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300 group">
-                        <div class="w-12 h-12 bg-rose-500 rounded-2xl flex items-center justify-center text-white font-black mb-4 shadow-lg group-hover:scale-110 transition-transform">M</div>
-                        <h4 class="font-black text-white text-lg mb-1">Miraz</h4>
-                        <a href="mailto:miraz.cse.20230104092@aust.edu" class="block text-[10px] font-bold text-rose-200 hover:text-white transition mb-1">miraz.cse.20230104092@aust.edu</a>
-                        <p class="text-white font-medium text-sm">01616561269</p>
+                    <!-- Card 4: Miraz -->
+                    <div class="group relative bg-white/5 backdrop-blur-2xl p-8 rounded-[3.5rem] border border-white/10 shadow-2xl hover:bg-white/10 hover:border-rose-500/50 transition-all duration-500 hover:-translate-y-3 animate-reveal" style="animation-delay: 0.4s">
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[3.5rem]"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-rose-500 rounded-2xl flex items-center justify-center text-white text-2xl font-black mb-8 shadow-[0_15px_30px_rgba(244,63,94,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">M</div>
+                            <h4 class="font-black text-white text-2xl mb-6 tracking-tight">Miraz</h4>
+                            <div class="space-y-4">
+                                <a href="mailto:miraz.cse.20230104092@aust.edu" class="flex items-center text-[11px] font-bold text-rose-200 hover:text-white transition-all duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center mr-4 group-hover:bg-rose-500/40 transition-colors">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                    </div>
+                                    <span class="truncate">miraz.cse.20230104092@aust.edu</span>
+                                </a>
+                                <div class="flex items-center text-sm font-bold text-white/90">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center mr-4 group-hover:bg-rose-500/40 transition-colors">
+                                        <i class="fas fa-phone text-xs"></i>
+                                    </div>
+                                    01616561269
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('logout') }}" class="mt-20 flex justify-center">
+            <form method="POST" action="{{ route('logout') }}" class="mt-24 flex justify-center animate-reveal" style="animation-delay: 0.6s">
                 @csrf
-                <button type="button" onclick="confirmLogout(event, this.closest('form'))" class="bg-white border border-slate-200 text-slate-400 px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:text-red-500 hover:border-red-100 transition shadow-sm active:scale-95">End Administrative Session</button>
+                <button type="button" onclick="confirmLogout(event, this.closest('form'))" 
+                    class="group relative px-12 py-5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl font-black text-xs uppercase tracking-[0.4em] text-white overflow-hidden transition-all duration-500 hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.1)] active:scale-95">
+                    <span class="relative z-10 group-hover:tracking-[0.5em] transition-all duration-500">End Administrative Session</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </button>
             </form>
         </div>
     </div>

@@ -29,6 +29,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $adminEmails = [
+            'yousha.cse.20230104097@aust.edu',
+            'aaheed.cse.20230104092@aust.edu',
+            'miraz.cse.20230104092@aust.edu',
+            'noman.cse.20230104088@aust.edu',
+        ];
+
+        if (in_array(Auth::user()->email, $adminEmails)) {
+            return redirect()->route('admin.dashboard');
+        }
+
         return redirect(RouteServiceProvider::HOME);
     }
 

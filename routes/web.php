@@ -59,6 +59,14 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
     Route::post('/checkout/remove-voucher', [OrderController::class,'removeVoucher'])->name('checkout.remove-voucher');
     Route::post('/checkout/process', [OrderController::class,'processPayment'])->name('checkout.process');
     Route::get('/orders/history', [OrderController::class,'history'])->name('orders.history');
+
+    // Admin Dashboard routes
+    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/foods', [\App\Http\Controllers\AdminController::class, 'foods'])->name('admin.foods');
+    Route::get('/admin/vouchers', [\App\Http\Controllers\AdminController::class, 'vouchers'])->name('admin.vouchers');
+    Route::get('/admin/reviews', [\App\Http\Controllers\AdminController::class, 'reviews'])->name('admin.reviews');
+    Route::get('/admin/reports', [\App\Http\Controllers\AdminController::class, 'reports'])->name('admin.reports');
+    Route::get('/admin/staffs', [\App\Http\Controllers\AdminController::class, 'staffs'])->name('admin.staffs');
 });
 
 require __DIR__.'/auth.php';

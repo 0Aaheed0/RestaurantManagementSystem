@@ -19,8 +19,18 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
+        $adminEmails = [
+            'yousha.cse.20230104097@aust.edu',
+            'aaheed.cse.20230104092@aust.edu',
+            'miraz.cse.20230104092@aust.edu',
+            'noman.cse.20230104088@aust.edu',
+        ];
+
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if (in_array(Auth::guard($guard)->user()->email, $adminEmails)) {
+                    return redirect()->route('admin.dashboard');
+                }
                 return redirect(RouteServiceProvider::HOME);
             }
         }
