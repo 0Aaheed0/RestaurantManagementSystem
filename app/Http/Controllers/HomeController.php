@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\FoodItem;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +28,7 @@ class HomeController extends Controller
     {
         $branches = Branch::limit(5)->get();
         $foodItems = FoodItem::limit(5)->get();
-        return view('home', compact('branches', 'foodItems'));
+        $vouchers = Voucher::where('valid_until', '>=', now())->limit(3)->get();
+        return view('home', compact('branches', 'foodItems', 'vouchers'));
     }
 }

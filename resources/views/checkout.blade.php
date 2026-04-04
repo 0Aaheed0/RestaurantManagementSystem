@@ -403,12 +403,14 @@
                     @else
                         <form method="POST" action="{{ route('checkout.apply-voucher') }}" class="voucher-input-group">
                             @csrf
-                            <input type="text" name="voucher_code" class="voucher-input" placeholder="Enter voucher code" />
+                            <select name="voucher_code" class="voucher-input" style="appearance: auto; cursor: pointer; background: rgba(95, 15, 156, 0.4); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                                <option value="" disabled selected>Select voucher code</option>
+                                <option value="WELCOME10" style="background: #5f0f9c;">WELCOME10 (10% Off)</option>
+                                <option value="FLAT50" style="background: #5f0f9c;">FLAT50 (৳50 Off)</option>
+                                <option value="SPRING20" style="background: #5f0f9c;">SPRING20 (20% Off)</option>
+                            </select>
                             <button type="submit" class="voucher-apply-btn">Apply</button>
                         </form>
-                        <small style="color: rgba(255,255,255,0.6); display: block; margin-top: 8px;">
-                            Available: WELCOME10, FLAT50, SPRING20
-                        </small>
                     @endif
                 </div>
 
@@ -424,7 +426,7 @@
                                 <label style="color: white; font-weight: 600; display: block; margin-bottom: 8px;">
                                     <i class="fa-solid fa-location-dot"></i> Delivery Address *
                                 </label>
-                                <textarea name="delivery_address" class="voucher-input" placeholder="Enter your full delivery address" required style="resize: vertical; min-height: 80px; padding: 12px 15px; font-family: inherit;">{{ old('delivery_address') }}</textarea>
+                                <textarea name="delivery_address" class="voucher-input" placeholder="Enter your full delivery address" required style="resize: vertical; min-height: 80px; padding: 12px 15px; font-family: inherit; background: rgba(95, 15, 156, 0.2);">{{ old('delivery_address') }}</textarea>
                                 @error('delivery_address')
                                     <small style="color: #fca5a5; display: block; margin-top: 5px;"><i class="fa-solid fa-exclamation-circle"></i> {{ $message }}</small>
                                 @enderror
@@ -435,17 +437,27 @@
                                     <label style="color: white; font-weight: 600; display: block; margin-bottom: 8px;">
                                         <i class="fa-solid fa-city"></i> City *
                                     </label>
-                                    <input type="text" name="delivery_city" class="voucher-input" placeholder="e.g., Dhaka" required value="{{ old('delivery_city') }}" />
+                                    <select name="delivery_city" id="delivery_city" class="voucher-input" required style="width: 100%; cursor: pointer; appearance: auto; background: rgba(95, 15, 156, 0.4); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                                        <option value="" disabled selected style="background: #5f0f9c;">Select City</option>
+                                        @foreach($branches->pluck('city')->unique() as $city)
+                                            <option value="{{ $city }}" {{ old('delivery_city') == $city ? 'selected' : '' }} style="background: #5f0f9c;">{{ $city }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('delivery_city')
                                         <small style="color: #fca5a5; display: block; margin-top: 5px;"><i class="fa-solid fa-exclamation-circle"></i> {{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div>
                                     <label style="color: white; font-weight: 600; display: block; margin-bottom: 8px;">
-                                        <i class="fa-solid fa-hashtag"></i> Postal Code *
+                                        <i class="fa-solid fa-shop"></i> Branch *
                                     </label>
-                                    <input type="text" name="delivery_postal_code" class="voucher-input" placeholder="e.g., 1205" required value="{{ old('delivery_postal_code') }}" />
-                                    @error('delivery_postal_code')
+                                    <select name="branch_address" id="branch_id" class="voucher-input" required style="width: 100%; cursor: pointer; appearance: auto; background: rgba(95, 15, 156, 0.4); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                                        <option value="" disabled selected style="background: #5f0f9c;">Select Branch</option>
+                                        @foreach($branches as $branch)
+                                            <option value="{{ $branch->name }}" data-city="{{ $branch->city }}" class="branch-option" style="display: none; background: #5f0f9c;">{{ $branch->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('branch_address')
                                         <small style="color: #fca5a5; display: block; margin-top: 5px;"><i class="fa-solid fa-exclamation-circle"></i> {{ $message }}</small>
                                     @enderror
                                 </div>
@@ -480,7 +492,7 @@
                             </label>
                         </div>
 
-                        <button type="submit" class="payment-btn">
+                        <button type="submit" id="submitBtn" class="payment-btn">
                             <i class="fa-solid fa-lock"></i> Complete Payment
                         </button>
                     </form>
@@ -488,4 +500,204 @@
             </div>
         </div>
     </div>
+
+    <!-- Premium Success Notification Modal -->
+    <div id="successModal" class="premium-modal-overlay" style="display: none;">
+        <div class="premium-modal">
+            <div class="premium-checkmark">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="premium-title" id="modalTitle">payment completed</h2>
+            <p class="premium-text" id="modalText">Your order is being processed. Please wait...</p>
+            <div class="premium-loader" id="modalLoader"></div>
+        </div>
+    </div>
+
+    <style>
+        .premium-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .premium-modal {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .premium-checkmark {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 40px;
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+            animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .premium-title {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .premium-text {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .premium-loader {
+            width: 40px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-loader::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background: #5f0f9c;
+            animation: loading 1.5s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        @keyframes loading {
+            from { left: -40%; }
+            to { left: 100%; }
+        }
+    </style>
+
+    <script>
+        const citySelect = document.getElementById('delivery_city');
+        const branchSelect = document.getElementById('branch_id');
+        const allBranchOptions = Array.from(branchSelect.querySelectorAll('.branch-option'));
+        const defaultBranchOption = branchSelect.querySelector('option[value=""]');
+
+        citySelect.addEventListener('change', function() {
+            const selectedCity = this.value;
+            
+            // Clear current options except the default one
+            branchSelect.innerHTML = "";
+            branchSelect.appendChild(defaultBranchOption);
+            
+            // Filter and add only relevant branches
+            allBranchOptions.forEach(option => {
+                if (option.getAttribute('data-city') === selectedCity) {
+                    const newOption = option.cloneNode(true);
+                    newOption.style.display = 'block';
+                    branchSelect.appendChild(newOption);
+                }
+            });
+
+            branchSelect.value = "";
+            branchSelect.disabled = false;
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            const form = this;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Check if form is valid before showing modal
+            if (!form.checkValidity()) {
+                return; // Let browser handle validation messages
+            }
+            
+            e.preventDefault(); // Stop immediate submission
+            
+            const modal = document.getElementById('successModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            
+            modal.style.display = 'flex';
+            
+            // Send request via AJAX
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Update modal for success state
+                    modalTitle.innerText = "payment completed";
+                    modalText.innerText = "Thank you! Your order has been placed.";
+                    
+                    // Stay for 3 seconds then hide modal and update button
+                    setTimeout(function() {
+                        modal.style.display = 'none';
+                        submitBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment completed';
+                        submitBtn.disabled = true;
+                        submitBtn.style.background = '#22c55e';
+                        submitBtn.style.color = 'white';
+                        submitBtn.style.cursor = 'default';
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                let errorMessage = 'Payment processing failed. Please try again.';
+                if (error.errors) {
+                    errorMessage = Object.values(error.errors).flat().join('\n');
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                alert(errorMessage);
+                modal.style.display = 'none';
+            });
+        });
+    </script>
 </x-app-layout>

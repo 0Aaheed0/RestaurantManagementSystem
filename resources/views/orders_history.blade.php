@@ -237,6 +237,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if(isset($cartItems) && $cartItems->count() > 0)
+                            <tr style="background: rgba(255, 255, 255, 0.05);">
+                                <td>-</td>
+                                <td>In Cart<br><small style="opacity:0.6">Current</small></td>
+                                <td>
+                                    <ul class="items-list">
+                                        @foreach($cartItems as $item)
+                                            <li>{{ $item->quantity }}x {{ $item->food->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 700;">৳{{ number_format($cartItems->sum(fn($i) => $i->food->price * $i->quantity), 0) }}</div>
+                                </td>
+                                <td>
+                                    <span style="font-size: 11px; opacity: 0.7;">Not yet ordered</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-pending">
+                                        pending
+                                    </span>
+                                </td>
+                            </tr>
+                        @endif
+
                         @foreach($orders as $order)
                             <tr>
                                 <td>#{{ 1000 + $order->id }}</td>
@@ -261,9 +286,15 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="address-badge" onclick="openAddressModal({{ $order->id }})">
-                                        <i class="fa-solid fa-map-marker-alt"></i> View Address
-                                    </button>
+                                    @if($order->branch_address)
+                                        <div style="font-size: 13px; font-weight: 600;">
+                                            <i class="fa-solid fa-shop"></i> {{ $order->branch_address }}
+                                        </div>
+                                    @else
+                                        <button class="address-badge" onclick="openAddressModal({{ $order->id }})">
+                                            <i class="fa-solid fa-map-marker-alt"></i> View Address
+                                        </button>
+                                    @endif
                                     <!-- Hidden address data -->
                                     <div id="address-{{ $order->id }}" style="display:none;">
                                         <div class="modal-address-info">

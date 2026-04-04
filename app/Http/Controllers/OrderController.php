@@ -36,7 +36,9 @@ class OrderController extends Controller
             }
         }
 
-        return view('checkout', compact('cartItems', 'subtotal', 'discountAmount', 'finalAmount', 'appliedVoucher'));
+        $branches = \App\Models\Branch::all();
+
+        return view('checkout', compact('cartItems', 'subtotal', 'discountAmount', 'finalAmount', 'appliedVoucher', 'branches'));
     }
 
     // Apply voucher
@@ -74,12 +76,12 @@ class OrderController extends Controller
             'payment_method' => 'required|in:card,mobile_banking,cash',
             'delivery_address' => 'required|string|max:500',
             'delivery_city' => 'required|string|max:100',
-            'delivery_postal_code' => 'required|string|max:20',
+            'branch_address' => 'required|string|max:200',
             'delivery_phone' => 'required|string|max:20'
         ], [
             'delivery_address.required' => 'Delivery address is required',
             'delivery_city.required' => 'City is required',
-            'delivery_postal_code.required' => 'Postal code is required',
+            'branch_address.required' => 'Branch is required',
             'delivery_phone.required' => 'Phone number is required'
         ]);
 
@@ -114,10 +116,10 @@ class OrderController extends Controller
                 'voucher_id' => $voucherId,
                 'discount_amount' => $discountAmount,
                 'final_price' => $finalPrice,
-                'status' => $request->payment_method === 'cash' ? 'pending' : 'completed',
+                'status' => 'completed',
                 'delivery_address' => $request->delivery_address,
                 'delivery_city' => $request->delivery_city,
-                'delivery_postal_code' => $request->delivery_postal_code,
+                'branch_address' => $request->branch_address,
                 'delivery_phone' => $request->delivery_phone
             ]);
 
@@ -125,7 +127,7 @@ class OrderController extends Controller
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'food_item_id' => $item->food_id,
+                    'food_item_id' => $item->food_item_id,
                     'quantity' => $item->quantity,
                     'price' => $item->food->price * $item->quantity
                 ]);
@@ -134,6 +136,10 @@ class OrderController extends Controller
             // Clear cart and session
             CartItem::where('user_id', $user->id)->delete();
             session()->forget('applied_voucher_id');
+
+            if ($request->ajax()) {
+                return response()->json(['success' => true]);
+            }
 
             return view('payment_success', [
                 'order' => $order,
@@ -163,8 +169,17 @@ class OrderController extends Controller
     // View order history
     public function history()
     {
-        $orders = Order::with('items.food', 'voucher')->where('user_id', auth()->id())->orderBy('created_at','desc')->get();
-        return view('orders_history', compact('orders'));
+        $user = auth()->user();
+        $orders = Order::with('items.food', 'voucher')->where('user_id', $user->id)->orderBy('created_at','desc')->get();
+        
+        // Force all existing orders to show as completed for this display
+        foreach($orders as $order) {
+            $order->status = 'completed';
+        }
+
+        $cartItems = CartItem::with('food')->where('user_id', $user->id)->get();
+        
+        return view('orders_history', compact('orders', 'cartItems'));
     }
 
     // Old checkout method (deprecated - kept for compatibility)

@@ -36,9 +36,14 @@
                 active: 0,
                 hover: false,
                 slides: [
-                    { title: 'Juicy Burger 50% OFF', desc: 'Special weekend deal on all classic burgers', grad: 'from-orange-500 via-red-500 to-rose-600', img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&auto=format&fit=crop&q=60' },
-                    { title: 'BOGO Pizza Feast', desc: 'Buy 1 Get 1 FREE on all large pizzas', grad: 'from-amber-400 via-orange-500 to-red-500', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=60' },
-                    { title: '20% OFF Everything', desc: 'Enjoy a flat discount across our entire menu', grad: 'from-purple-600 via-indigo-600 to-blue-600', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&auto=format&fit=crop&q=60' }
+                    @foreach($vouchers as $index => $voucher)
+                    { 
+                        title: 'CODE: {{ $voucher->code }}', 
+                        desc: 'Enjoy @if($voucher->type == 'percentage'){{ $voucher->discount }}%@else৳{{ $voucher->discount }}@endif discount on our delicious food items!', 
+                        grad: '{{ ['from-orange-500 via-red-500 to-rose-600', 'from-amber-400 via-orange-500 to-red-500', 'from-purple-600 via-indigo-600 to-blue-600'][$index % 3] }}', 
+                        img: '{{ ['https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&auto=format&fit=crop&q=60', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=60', 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&auto=format&fit=crop&q=60'][$index % 3] }}' 
+                    }@if(!$loop->last),@endif
+                    @endforeach
                 ],
                 start() { setInterval(() => { if (!this.hover) { this.active = (this.active + 1) % this.slides.length } }, 4500) }
             }" x-init="start()" class="mb-16 flex justify-center">
@@ -50,7 +55,6 @@
                                 <div class="pl-20 pr-8 max-w-md relative z-10">
                                     <h2 class="text-4xl font-black mb-3" x-text="slide.title"></h2>
                                     <p class="text-lg opacity-90 mb-6" x-text="slide.desc"></p>
-                                    <button class="bg-white text-slate-800 px-8 py-3 rounded-xl font-black uppercase text-sm shadow-lg hover:bg-slate-100 transition active:scale-95">View Offer →</button>
                                 </div>
                                 <div class="pr-16 relative z-10">
                                     <img :src="slide.img" alt="Offer Visual" class="w-56 h-40 rounded-3xl object-cover border-4 border-white/20 shadow-2xl">
@@ -87,7 +91,7 @@
                     <h2 class="text-3xl font-black text-slate-800 flex items-center mb-0">
                         <span class="w-10 h-1 bg-orange-500 rounded-full mr-4"></span> Popular Food
                     </h2>
-                    <a href="#" class="bg-white text-orange-500 px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:shadow-md transition border border-orange-100 no-underline">See More →</a>
+                    <a href="{{ route('food.index') }}" class="bg-white text-orange-500 px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:shadow-md transition border border-orange-100 no-underline">See More →</a>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     @foreach($foodItems as $food)

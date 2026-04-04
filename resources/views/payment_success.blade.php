@@ -221,7 +221,7 @@
                 ✓
             </div>
 
-            <h1 class="success-title">Order Successful!</h1>
+            <h1 class="success-title">payment completed</h1>
             <p class="success-message">
                 Your payment has been processed successfully.<br>
                 Your delicious food will be prepared and delivered soon!

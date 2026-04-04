@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     private $adminEmails = [
         'yousha.cse.20230104097@aust.edu',
-        'aaheed.cse.20230104092@aust.edu',
+        'aaheed.cse.20230104094@aust.edu',
         'miraz.cse.20230104092@aust.edu',
         'noman.cse.20230104088@aust.edu',
     ];
