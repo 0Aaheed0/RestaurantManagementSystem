@@ -404,10 +404,12 @@
                         <form method="POST" action="{{ route('checkout.apply-voucher') }}" class="voucher-input-group">
                             @csrf
                             <select name="voucher_code" class="voucher-input" style="appearance: auto; cursor: pointer; background: rgba(95, 15, 156, 0.4); color: white; border: 1px solid rgba(255,255,255,0.2);">
-                                <option value="" disabled selected>Select voucher code</option>
-                                <option value="WELCOME10" style="background: #5f0f9c;">WELCOME10 (10% Off)</option>
-                                <option value="FLAT50" style="background: #5f0f9c;">FLAT50 (৳50 Off)</option>
-                                <option value="SPRING20" style="background: #5f0f9c;">SPRING20 (20% Off)</option>
+                                <option value="" disabled selected>SELECT VOUCHER CODE</option>
+                                @foreach($vouchers as $voucher)
+                                    <option value="{{ $voucher->code }}" style="background: #5f0f9c;">
+                                        {{ $voucher->code }} ({{ $voucher->type == 'percentage' ? $voucher->discount.'% OFF' : '৳'.$voucher->discount.' OFF' }})
+                                    </option>
+                                @endforeach
                             </select>
                             <button type="submit" class="voucher-apply-btn">Apply</button>
                         </form>

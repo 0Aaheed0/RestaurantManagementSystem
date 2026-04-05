@@ -51,7 +51,7 @@
 
         .staff-page-root h2 { font-size: 28px; margin-bottom: 25px; font-weight: 700; color: white !important; border:none; }
 
-        .staff-page-root input, .staff-page-root textarea {
+        .staff-page-root input, .staff-page-root textarea, .staff-page-root select {
             width: 100%;
             padding: 12px 14px;
             margin-bottom: 15px;
@@ -60,6 +60,12 @@
             background: rgba(255,255,255,0.1);
             color: white;
             outline: none;
+            appearance: auto;
+        }
+
+        .staff-page-root select option {
+            background-color: #5f0f9c;
+            color: white;
         }
 
         .staff-page-root input::placeholder, .staff-page-root textarea::placeholder { color: rgba(255,255,255,0.7); }
@@ -97,7 +103,14 @@
                 <input type="text" name="full_name" placeholder="Full Name" required>
                 <input type="email" name="email" placeholder="Email Address" required>
                 <input type="text" name="phone" placeholder="Phone Number">
-                <input type="text" name="position" placeholder="Position Applied For" required>
+                <select name="position" required>
+                    <option value="" disabled selected>Position Applied For</option>
+                    <option value="Waiter">Waiter</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Chef">Chef</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="Security Guard">Security Guard</option>
+                </select>
                 <textarea name="experience" placeholder="Relevant Experience" rows="4"></textarea>
 
                 <button type="submit">SUBMIT APPLICATION</button>

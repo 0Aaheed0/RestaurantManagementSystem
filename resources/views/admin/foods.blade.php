@@ -32,6 +32,11 @@
             font-size: 0.85rem !important;
         }
 
+        select option {
+            background-color: #3b0764 !important;
+            color: white !important;
+        }
+
         input:focus, select:focus, textarea:focus {
             border-color: #9d4edd !important;
             outline: none !important;
@@ -135,7 +140,14 @@
 
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-purple-200 mb-1">Category</label>
-                            <input type="text" name="category" placeholder="e.g. Burger, Pizza, Drinks" required class="w-full px-4 py-2.5 rounded-xl">
+                            <select name="category" required class="w-full px-4 py-2.5 rounded-xl">
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Pizza">Pizza</option>
+                                <option value="Burger">Burger</option>
+                                <option value="Kacchi/Rice">Kacchi/Rice</option>
+                                <option value="Special">Special</option>
+                                <option value="Beverage">Beverage</option>
+                            </select>
                         </div>
 
                         <div>
@@ -278,7 +290,13 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-purple-200 mb-1">Category</label>
-                            <input type="text" name="category" x-model="editData.category" required class="w-full px-4 py-2 rounded-xl">
+                            <select name="category" x-model="editData.category" required class="w-full px-4 py-2 rounded-xl">
+                                <option value="Pizza">Pizza</option>
+                                <option value="Burger">Burger</option>
+                                <option value="Kacchi/Rice">Kacchi/Rice</option>
+                                <option value="Special">Special</option>
+                                <option value="Beverage">Beverage</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-purple-200 mb-1">Price ($)</label>

@@ -37,8 +37,12 @@ class OrderController extends Controller
         }
 
         $branches = \App\Models\Branch::all();
+        $vouchers = Voucher::where('valid_until', '>=', today())
+                           ->whereRaw('uses < max_uses')
+                           ->latest()
+                           ->get();
 
-        return view('checkout', compact('cartItems', 'subtotal', 'discountAmount', 'finalAmount', 'appliedVoucher', 'branches'));
+        return view('checkout', compact('cartItems', 'subtotal', 'discountAmount', 'finalAmount', 'appliedVoucher', 'branches', 'vouchers'));
     }
 
     // Apply voucher
@@ -48,7 +52,11 @@ class OrderController extends Controller
             'voucher_code' => 'required|string|max:50'
         ]);
 
-        $voucher = Voucher::where('code', strtoupper($request->voucher_code))->first();
+        $voucher = Voucher::where('code', strtoupper($request->voucher_code))
+                            ->where('valid_until', '>=', today())
+                            ->whereRaw('uses < max_uses')
+                            ->latest()
+                            ->first();
 
         if (!$voucher) {
             return back()->withErrors(['voucher_code' => 'Invalid voucher code.']);
@@ -153,7 +161,7 @@ class OrderController extends Controller
     // Validate voucher
     private function isVoucherValid(Voucher $voucher)
     {
-        return $voucher->valid_until >= now() && $voucher->uses < $voucher->max_uses;
+        return $voucher->valid_until >= today() && $voucher->uses < $voucher->max_uses;
     }
 
     // Calculate discount amount

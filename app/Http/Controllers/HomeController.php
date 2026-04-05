@@ -28,7 +28,11 @@ class HomeController extends Controller
     {
         $branches = Branch::limit(5)->get();
         $foodItems = FoodItem::limit(5)->get();
-        $vouchers = Voucher::where('valid_until', '>=', now())->limit(3)->get();
+        $vouchers = Voucher::where('valid_until', '>=', today())
+                           ->whereRaw('uses < max_uses')
+                           ->latest()
+                           ->limit(3)
+                           ->get();
         return view('home', compact('branches', 'foodItems', 'vouchers'));
     }
 }
